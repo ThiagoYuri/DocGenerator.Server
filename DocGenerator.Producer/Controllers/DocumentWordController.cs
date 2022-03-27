@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Text.Json;
 using System.Threading.Tasks;
 
 namespace DocGenerator.Producer.Controllers
@@ -13,36 +14,49 @@ namespace DocGenerator.Producer.Controllers
     [Route("[controller]")]
     public class DocumentWordController : ControllerBase
     {
-        //[HttpGet("{byte}")]
-        [HttpGet]
-        [Route("Stream")]
-        public async Task<IActionResult> DownloadPdfFile(IFormFile file)
+        
+        [HttpPost]
+        [Route("PostFile")]
+        public async Task<JsonResult> DownloadPdfFile(IFormFile file)
         {
             try
             {
+                DocumentWord docWord = new DocumentWord("useAgent");
                 FileInfo fileInfo = new FileInfo(file.FileName);
+                
                 if (file.Length <= 0)
-                    return BadRequest("Empty file");
+                    throw new Exception("Empty file");
                 if (fileInfo.Extension.ToLower() != ".docx")
                     throw new Exception("support extension .docx");
 
-                var ms = new MemoryStream();
-                    await file.CopyToAsync(ms);
-                    ms.Position = 0;
-                return File(file.OpenReadStream(), "application/docx", "File.docx");
-                
+                docWord.DocumentWordConvertPdf(file);
+                return new JsonResult(docWord);
 
-                // new FileStreamResult(stream, mimeType)
-                //
-                //   FileDownloadName = "File.pdf"
-                // };
+                //return File(file.OpenReadStream(), "application/docx", "File.docx"); funcionou
+
             }
             catch (Exception)
             {
 
                 throw;
+            }           
+        }
+
+        [HttpGet]
+        [Route("GetFile")]
+        public async Task<IActionResult> GetPdfFile(string id)
+        {
+            try
+            {
+                string directory = Directory.GetCurrentDirectory() + "/doc/" + id + ".pdf";
+                var stream = new FileStream(directory, FileMode.Open);
+                return new FileStreamResult(stream, "application/pdf");
             }
-           
+            catch
+            {
+                throw;
+            }
+
         }
 
     }
