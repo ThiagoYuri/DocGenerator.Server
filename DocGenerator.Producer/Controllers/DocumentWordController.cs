@@ -1,11 +1,7 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Logging;
 using System;
-using System.Collections.Generic;
 using System.IO;
-using System.Linq;
-using System.Text.Json;
 using System.Threading.Tasks;
 
 namespace DocGenerator.Producer.Controllers
@@ -25,14 +21,14 @@ namespace DocGenerator.Producer.Controllers
         {
             try
             {
-                DocumentWord docWord = new DocumentWord(Request.Headers["User-Agent"]);
-                FileInfo fileInfo = new FileInfo(file.FileName);
-                
+                if(file == null)
+                    throw new Exception("File is null");
                 if (file.Length <= 0)
                     throw new Exception("Empty file");
-                if (fileInfo.Extension.ToLower() != ".docx")
+                if (!file.FileName.Contains(".docx"))
                     throw new Exception("support extension .docx");
 
+                DocumentWord docWord = new DocumentWord(Request.Headers["User-Agent"]);
                 docWord.DocumentWordConvertPdf(file);
                 return new JsonResult(docWord);
             }
