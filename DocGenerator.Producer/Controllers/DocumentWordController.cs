@@ -14,14 +14,18 @@ namespace DocGenerator.Producer.Controllers
     [Route("[controller]")]
     public class DocumentWordController : ControllerBase
     {
-        
+        /// <summary>
+        /// Edit and Post file .docx convert to .pdf
+        /// </summary>
+        /// <param name="file"></param>
+        /// <returns>ID pdf</returns>
         [HttpPost]
         [Route("PostFile")]
         public async Task<JsonResult> DownloadPdfFile(IFormFile file)
         {
             try
             {
-                DocumentWord docWord = new DocumentWord("useAgent");
+                DocumentWord docWord = new DocumentWord(Request.Headers["User-Agent"]);
                 FileInfo fileInfo = new FileInfo(file.FileName);
                 
                 if (file.Length <= 0)
@@ -31,30 +35,35 @@ namespace DocGenerator.Producer.Controllers
 
                 docWord.DocumentWordConvertPdf(file);
                 return new JsonResult(docWord);
-
-                //return File(file.OpenReadStream(), "application/docx", "File.docx"); funcionou
-
             }
-            catch (Exception)
+            catch (Exception e)
             {
-
-                throw;
+                return new JsonResult(e.Message);
             }           
         }
 
+
+        /// <summary>
+        /// Get file .pdf by id
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns>File PDF</returns>
         [HttpGet]
         [Route("GetFile")]
         public async Task<IActionResult> GetPdfFile(string id)
         {
             try
             {
-                string directory = Directory.GetCurrentDirectory() + "/doc/" + id + ".pdf";
-                var stream = new FileStream(directory, FileMode.Open);
+                var stream = new FileStream($"{Properties.StaticProperties.pathDefaultPdf}/{id}.pdf", FileMode.Open);
                 return new FileStreamResult(stream, "application/pdf");
             }
-            catch
+            catch(FileNotFoundException)
             {
-                throw;
+                return BadRequest("Erro: file not exist");
+            }
+            catch (Exception e )
+            {
+                return BadRequest(e.Message);
             }
 
         }
