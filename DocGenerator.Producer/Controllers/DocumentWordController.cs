@@ -1,4 +1,6 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using DocGenerator.Shared;
+using DocGenerator.Shared.Models;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.IO;
@@ -28,8 +30,11 @@ namespace DocGenerator.Producer.Controllers
                 if (!file.FileName.Contains(".docx"))
                     throw new Exception("support extension .docx");
 
-                DocumentWord docWord = new DocumentWord(Request.Headers["User-Agent"]);
-                docWord.DocumentWordConvertPdf(file);
+
+                MemoryStream ms = new MemoryStream();
+                file.CopyTo(ms);
+                DocumentWord docWord = new DocumentWord(Request.Headers["User-Agent"],ms);
+                new Publishe<DocumentWord>(docWord);
                 return new JsonResult(docWord);
             }
             catch (Exception e)
@@ -50,7 +55,7 @@ namespace DocGenerator.Producer.Controllers
         {
             try
             {
-                var stream = new FileStream($"{Properties.StaticProperties.pathDefaultPdf}/{id}.pdf", FileMode.Open);
+                var stream = new FileStream($"{Shared.Utils.GeneratorPDF.pathDefaultPdf}/{id}.pdf", FileMode.Open);
                 return new FileStreamResult(stream, "application/pdf");
             }
             catch(FileNotFoundException)
