@@ -15,9 +15,11 @@ export class Courses extends Component {
                     <img src={this.state.Image} class="card-img-top" id="image-course" alt={this.state.NameCourse} />
                     <div class="card-body">
                         <h5 class="card-title">{this.state.NameCourse}</h5>
-                        <div class="card-text">{this.state.Description}</div>
-                        <button class="btn btn-primary">Create certificate</button>
-                        </div>
+                        <div class="card-text" style={{ height:'30px' }}>{this.state.Description}</div>
+                    </div>
+                    <div className="text-center aling-bottom" style={{ paddingBottom: '5px' }} >
+                        <button class="btn btn-primary" style={{ width: '80%' }} >Create certificate</button>
+                    </div>
                 </div>
             </div>
         );
