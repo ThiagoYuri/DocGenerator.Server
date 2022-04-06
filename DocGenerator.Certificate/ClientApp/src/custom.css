@@ -1,4 +1,17 @@
 /* Provide sufficient contrast against white background */
+
+:root {
+    --color-site-primary: #1b6ec2;
+
+    --color-site-body: #fff;
+
+    --blur-site-container-main: 0px;
+}
+
+body{
+    background:var(--color-site-body);
+}
+
 a {
   color: #0366d6;
 }
@@ -7,8 +20,12 @@ code {
   color: #E01A76;
 }
 
+
+
 .btn-primary {
-  color: #fff;
-  background-color: #1b6ec2;
-  border-color: #1861ac;
+    color: #fff;
+    background-color: #1b6ec2;
+    border-color: #1861ac;
 }
+
+

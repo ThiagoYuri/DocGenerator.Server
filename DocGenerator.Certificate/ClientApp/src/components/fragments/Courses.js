@@ -1,27 +1,44 @@
 import React, { Component } from 'react';
 import './Courses.css'
+import { PopupForms } from '../popups/forms/PopupForms'
 
 export class Courses extends Component {
 
     constructor(props) {
         super(props);
-        this.state = props.course;
+        this.state = { isOpenModel: false };
+
+        this.updateStateModal = this.updateStateModal.bind(this)
+    }
+
+    //Create or destroy PopupModal
+    updateStateModal() {
+        if (this.state.isOpenModel)
+            this.setState({ isOpenModel: false });
+        else 
+            this.setState({ isOpenModel: true });        
     }
 
     render() {
+        const { props } = this,
+            { course } = props;
+        const { isOpenModel } = this.state
         return (
             <div>
-                <div class="card" >
-                    <img src={this.state.Image} class="card-img-top" id="image-course" alt={this.state.NameCourse} />
-                    <div class="card-body">
-                        <h5 class="card-title">{this.state.NameCourse}</h5>
-                        <div class="card-text" style={{ height:'30px' }}>{this.state.Description}</div>
+                <div className="card" >
+                    <img src={course.Image} className="card-img-top" id="image-course" alt={course.NameCourse} />
+                    <div className="card-body">
+                        <h5 className="card-title">{course.NameCourse}</h5>
+                        <div className="card-text" style={{ height:'30px' }}>{course.Description}</div>
                     </div>
                     <div className="text-center aling-bottom" style={{ paddingBottom: '5px' }} >
-                        <button class="btn btn-primary" style={{ width: '80%' }} >Create certificate</button>
+                        <button className="btn btn-primary" style={{ width: '80%' }} onClick={this.updateStateModal} >Create certificate</button>
                     </div>
                 </div>
+
+                {(isOpenModel ? <PopupForms className='PopupForms' closePopup={this.updateStateModal} /> : null)}
             </div>
+
         );
     }
 }
