@@ -1,0 +1,10 @@
+#image-course {
+    width: auto;
+    height: 300px;
+    margin: 20px;
+}
+
+.card {
+    border: 1px solid #A9A9A9;
+    border-radius: 15px;
+}

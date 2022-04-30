@@ -1,0 +1,3 @@
+.home-body {
+    filter: blur(var(--blur-site-container-main));
+}
