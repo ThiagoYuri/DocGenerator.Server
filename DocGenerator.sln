@@ -13,9 +13,11 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "APIServices", "APIServices"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "WebClient", "WebClient", "{99D033D5-EBE8-401B-8B4D-E015358F4D7C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DocGenerator.Certificate", "DocGenerator.Certificate\DocGenerator.Certificate.csproj", "{CE99BB80-A023-4876-80D1-F82FA509FFB6}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DocGenerator.Certificate", "DocGenerator.Certificate\DocGenerator.Certificate.csproj", "{CE99BB80-A023-4876-80D1-F82FA509FFB6}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DocGenerator.ProofOfPayment", "DocGenerator.ProofOfPayment\DocGenerator.ProofOfPayment.csproj", "{1B13E8A4-7C59-4226-87EC-ADFA1F6C37C7}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DocGenerator.ProofOfPayment", "DocGenerator.ProofOfPayment\DocGenerator.ProofOfPayment.csproj", "{1B13E8A4-7C59-4226-87EC-ADFA1F6C37C7}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DocGenerator.ClientDLL", "DocGenerator.ClientDLL\DocGenerator.ClientDLL.csproj", "{C7248DFD-DB64-4C4E-814B-D198BA969B5C}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -43,6 +45,10 @@ Global
 		{1B13E8A4-7C59-4226-87EC-ADFA1F6C37C7}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{1B13E8A4-7C59-4226-87EC-ADFA1F6C37C7}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{1B13E8A4-7C59-4226-87EC-ADFA1F6C37C7}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C7248DFD-DB64-4C4E-814B-D198BA969B5C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C7248DFD-DB64-4C4E-814B-D198BA969B5C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C7248DFD-DB64-4C4E-814B-D198BA969B5C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C7248DFD-DB64-4C4E-814B-D198BA969B5C}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -53,6 +59,7 @@ Global
 		{2734F1F0-1EC6-48C3-970F-8CE75D377CF4} = {47CEF3AC-C6B4-48B0-B235-1148FFECD8E7}
 		{CE99BB80-A023-4876-80D1-F82FA509FFB6} = {99D033D5-EBE8-401B-8B4D-E015358F4D7C}
 		{1B13E8A4-7C59-4226-87EC-ADFA1F6C37C7} = {99D033D5-EBE8-401B-8B4D-E015358F4D7C}
+		{C7248DFD-DB64-4C4E-814B-D198BA969B5C} = {99D033D5-EBE8-401B-8B4D-E015358F4D7C}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {47447DA2-F6CF-4FA1-968D-DBF3F84B63A8}
