@@ -1,3 +1,12 @@
+
 .home-body {
     filter: blur(var(--blur-site-container-main));
+}
+
+
+.card {
+    border: 1px solid #A9A9A9;
+    border-radius: 15px;
+    width: 300px;
+    height: 400px;
 }

@@ -12,10 +12,10 @@ export class Home extends Component {
 
     render() {
         
-        const ListComponents = [];        ListCourses.forEach((data) => {            ListComponents.push(<div className="col" style={{ paddingTop:'10px'}}>
-                <div className="card h-100">
-                    <Courses course={data}  />
-                </div>
+        const ListComponents = [];
+        ListCourses.forEach((data) => {
+            ListComponents.push(<div className="col col-lg-4 col-md-6 col-sm-12 col-xs-12" style={{ paddingTop:'10px'}}>
+                <Courses course={data}  />
             </div>);
         });
         return (
