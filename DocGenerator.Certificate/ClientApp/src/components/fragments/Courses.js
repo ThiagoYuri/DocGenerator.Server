@@ -24,9 +24,12 @@ export class Courses extends Component {
             { course } = props;
         const { isOpenModel } = this.state
         return (
-            <div>
-                <div className="card" >
-                    <img src={course.Image} className="card-img-top" id="image-course" alt={course.NameCourse} />
+                <div className="card center" >
+                    <div id="color-background-img">
+                        <div className='center' style={{height:'70%',width:'70%'}}>
+                            <img src={course.Image}  id="image-course" alt={course.NameCourse} />
+                        </div>
+                    </div>
                     <div className="card-body">
                         <h5 className="card-title">{course.NameCourse}</h5>
                         <div className="card-text" style={{ height:'30px' }}>{course.Description}</div>
@@ -34,11 +37,8 @@ export class Courses extends Component {
                     <div className="text-center aling-bottom" style={{ paddingBottom: '5px' }} >
                         <button className="btn btn-primary" style={{ width: '80%' }} onClick={this.updateStateModal} >Create certificate</button>
                     </div>
-                </div>
-
                 {(isOpenModel ? <PopupForms className='PopupForms' closePopup={this.updateStateModal} /> : null)}
-            </div>
-
+                </div>
         );
     }
 }
