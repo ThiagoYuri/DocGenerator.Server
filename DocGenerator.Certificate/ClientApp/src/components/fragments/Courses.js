@@ -7,7 +7,6 @@ export class Courses extends Component {
     constructor(props) {
         super(props);
         this.state = { isOpenModel: false };
-
         this.updateStateModal = this.updateStateModal.bind(this)
     }
 

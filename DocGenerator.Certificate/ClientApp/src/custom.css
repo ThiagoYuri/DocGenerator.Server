@@ -2,27 +2,15 @@
 
 :root {
     --color-site-primary: #1b6ec2;
-
-    --color-site-body: #fff;
-    
+    --color-site-body: #fff;    
     --card-background: rgba(192, 192, 192, 0.185);
     --card-image-background : rgba(59, 69, 214, 0.144);
-
     --blur-site-container-main: 0px;
 }
 
 body{
     background:var(--color-site-body);
 }
-
-a {
-  color: #0366d6;
-}
-
-code {
-  color: #E01A76;
-}
-
 
 
 .btn-primary {

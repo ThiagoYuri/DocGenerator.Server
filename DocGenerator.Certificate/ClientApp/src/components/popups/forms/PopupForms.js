@@ -5,19 +5,19 @@ export class PopupForms extends Component {
 
     static defaultProps = {
         course: {},
-        closePopup: () => { }
+        closePopup: () => { },
     }
 
     constructor(props) {
         super(props);
     }
 
-   
+
 
     render() {
         return (
             //Modal
-            <div className="collapse show modal fade PopupForms" tabIndex="-1" style={{ display: 'block' }}>
+            <div className="collapse show modal fade PopupForms" tabIndex="-1" style={{display:'block'}}>
                 <div className="modal-dialog">
                     <div className="modal-content">
                         <div className="modal-header">
@@ -30,8 +30,8 @@ export class PopupForms extends Component {
                             </div>
                         </div>
                         <div className="modal-footer">
-                            <button type="button" className="btn btn-secondary" data-bs-dismiss="modal" onClick={this.props.closePopup}>Close</button>
-                            <button type="button" className="btn btn-primary">Save changes</button>
+                            <button type="button" className="btn btn-secondary" onClick={this.props.closePopup}>Close</button>
+                            <button type="button" className="btn btn-primary" onClick={this.props.createCertificate}>Save changes</button>
                         </div>
                     </div>
                 </div>
