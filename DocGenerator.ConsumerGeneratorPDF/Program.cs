@@ -14,6 +14,8 @@ namespace DocGenerator.ConsumerGeneratorPDF
 {
     public class Program
     {
+        private static object OnMissing = System.Reflection.Missing.Value;
+
         static void Main(string[] args)
         {
                 var factory = new ConnectionFactory() { HostName = "localhost" };
@@ -38,8 +40,7 @@ namespace DocGenerator.ConsumerGeneratorPDF
                             Stream s = new MemoryStream(doc.File);
                             string directory = $"{Shared.Utils.GeneratorPDF.pathDefaultPdf}/{doc.Id}.docx";
                             CreateFile(s, directory);
-                            CreateNewInfo(s, directory, doc.ListNewInfoFile);
-                            CreatePDF(s, directory);
+                            CreatePDF(s, directory,doc);
                             Console.WriteLine(@$"ID:{doc.Id}");
                             Console.WriteLine("---------------------------------------------------------------------");
                         }
@@ -60,37 +61,31 @@ namespace DocGenerator.ConsumerGeneratorPDF
 
 
 
-         #region Action Files
+        #region Action Files
         /// <summary>
-        /// 
+        /// Create PDF
         /// </summary>
         /// <param name="file">stream of file</param>
         /// <param name="directoryDocx">file directory</param>
-        /// <param name="documentInfo">List string for change</param>
-        private static void CreatePDF(Stream file, string directoryDocx)
+        /// <param name="documentWord">List string for change</param>
+        private static void CreatePDF(Stream file, string directoryDocx, DocumentWord documentWord)
         {
             try
             {               
 
                 Word.Application word = new Word.Application() { Visible = false, ScreenUpdating = false };
-                object OnMissing = System.Reflection.Missing.Value;         
                 FileInfo fileInfo = new FileInfo(directoryDocx);
                 Object fileName = (Object)fileInfo.FullName;
-                Word.Document doc = word.Documents.Open(ref fileName, ref OnMissing,
-                    ref OnMissing, ref OnMissing, ref OnMissing, ref OnMissing, ref OnMissing,
-                    ref OnMissing, ref OnMissing, ref OnMissing, ref OnMissing, ref OnMissing, ref OnMissing,
-                    ref OnMissing, ref OnMissing, ref OnMissing);
+                Word.Document doc = word.Documents.Open(ref fileName);
                 doc.Activate();
 
-                
+                ReplaceValue(word, documentWord.ListNewInfoFile);
+
                 #region convert docx to pdf
                 string directoryPdf = fileInfo.FullName.Replace(".docx", ".pdf");
                 object outputFilename = directoryPdf;
                 object fileformat = WdSaveFormat.wdFormatPDF;
-                doc.SaveAs2(ref outputFilename, ref fileformat, ref OnMissing, ref OnMissing,
-                    ref OnMissing, ref OnMissing, ref OnMissing, ref OnMissing, ref OnMissing,
-                    ref OnMissing, ref OnMissing, ref OnMissing, ref OnMissing, ref OnMissing,
-                    ref OnMissing, ref OnMissing, ref OnMissing);
+                doc.SaveAs2(ref outputFilename, ref fileformat);
                 object savechanges = WdSaveOptions.wdSaveChanges;
                 #endregion
 
@@ -136,18 +131,15 @@ namespace DocGenerator.ConsumerGeneratorPDF
             catch { throw; }
         }
 
-
-        private static void CreateNewInfo(Stream file, string directoryDocx, List<DocumentInfo> documentInfo)
-        {
-            Word.Application word = new Word.Application() { Visible = true, ScreenUpdating = true };
-            object OnMissing = System.Reflection.Missing.Value;
-            FileInfo fileInfo = new FileInfo(directoryDocx);
-            Object fileName = (Object)fileInfo.FullName;
-            Word.Document doc = word.Documents.Open(ref fileName);
-            doc.Activate();
-
+        /// <summary>
+        ///  Replace values into word
+        /// </summary>
+        /// <param name="word">word</param>
+        /// <param name="listDocumentInfo">List string for change</param>
+        private static void ReplaceValue(Word.Application word, List<DocumentInfo> listDocumentInfo)
+        { 
             #region Edit Text
-            foreach (var x in documentInfo)
+            foreach (var x in listDocumentInfo)
             {
                 word.Selection.Find.ClearFormatting();
                 word.Selection.Find.Replacement.ClearFormatting();
@@ -169,14 +161,6 @@ namespace DocGenerator.ConsumerGeneratorPDF
                 
             }
             #endregion
-            object saveAs = directoryDocx;
-            doc.SaveAs2(ref saveAs, ref OnMissing, ref OnMissing, ref OnMissing,
-                                                ref OnMissing, ref OnMissing, ref OnMissing,
-                                                ref OnMissing, ref OnMissing, ref OnMissing, ref OnMissing, ref OnMissing, ref OnMissing,
-                                                ref OnMissing, ref OnMissing, ref OnMissing);
-
-            doc.Close();
-            word.Quit();
         }
         #endregion
     }
