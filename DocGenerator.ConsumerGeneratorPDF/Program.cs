@@ -4,6 +4,7 @@ using Microsoft.Office.Interop.Word;
 using RabbitMQ.Client;
 using RabbitMQ.Client.Events;
 using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Text;
 using System.Text.Json;
@@ -35,7 +36,10 @@ namespace DocGenerator.ConsumerGeneratorPDF
                             var json = Encoding.UTF8.GetString(body);
                             DocumentWord doc = JsonSerializer.Deserialize<DocumentWord>(json);
                             Stream s = new MemoryStream(doc.File);
-                            CreatePDF(s, $"{Shared.Utils.GeneratorPDF.pathDefaultPdf}/{doc.Id}.docx");
+                            string directory = $"{Shared.Utils.GeneratorPDF.pathDefaultPdf}/{doc.Id}.docx";
+                            CreateFile(s, directory);
+                            CreateNewInfo(s, directory, doc.ListNewInfoFile);
+                            CreatePDF(s, directory);
                             Console.WriteLine(@$"ID:{doc.Id}");
                             Console.WriteLine("---------------------------------------------------------------------");
                         }
@@ -51,21 +55,25 @@ namespace DocGenerator.ConsumerGeneratorPDF
 
                     Console.WriteLine(" Press [enter] to exit.");
                     Console.ReadLine();
-                }
-            
-
-
+                }      
         }
 
+
+
+         #region Action Files
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="file">stream of file</param>
+        /// <param name="directoryDocx">file directory</param>
+        /// <param name="documentInfo">List string for change</param>
         private static void CreatePDF(Stream file, string directoryDocx)
         {
             try
-            {
-                CreateFile(file, directoryDocx);
+            {               
 
                 Word.Application word = new Word.Application() { Visible = false, ScreenUpdating = false };
-                object OnMissing = System.Reflection.Missing.Value;
-
+                object OnMissing = System.Reflection.Missing.Value;         
                 FileInfo fileInfo = new FileInfo(directoryDocx);
                 Object fileName = (Object)fileInfo.FullName;
                 Word.Document doc = word.Documents.Open(ref fileName, ref OnMissing,
@@ -74,6 +82,7 @@ namespace DocGenerator.ConsumerGeneratorPDF
                     ref OnMissing, ref OnMissing, ref OnMissing);
                 doc.Activate();
 
+                
                 #region convert docx to pdf
                 string directoryPdf = fileInfo.FullName.Replace(".docx", ".pdf");
                 object outputFilename = directoryPdf;
@@ -97,9 +106,9 @@ namespace DocGenerator.ConsumerGeneratorPDF
         }
 
         /// <summary>
-        /// Delete created files
+        /// Delete existing files
         /// </summary>
-        /// <param name="directory"></param>
+        /// <param name="directory">Directory to deleting file</param>
         private static void DeleteFile(string directory)
         {
             try
@@ -126,5 +135,49 @@ namespace DocGenerator.ConsumerGeneratorPDF
             }
             catch { throw; }
         }
+
+
+        private static void CreateNewInfo(Stream file, string directoryDocx, List<DocumentInfo> documentInfo)
+        {
+            Word.Application word = new Word.Application() { Visible = true, ScreenUpdating = true };
+            object OnMissing = System.Reflection.Missing.Value;
+            FileInfo fileInfo = new FileInfo(directoryDocx);
+            Object fileName = (Object)fileInfo.FullName;
+            Word.Document doc = word.Documents.Open(ref fileName);
+            doc.Activate();
+
+            #region Edit Text
+            foreach (var x in documentInfo)
+            {
+                word.Selection.Find.ClearFormatting();
+                word.Selection.Find.Replacement.ClearFormatting();
+
+                object key = $"[{x.keyInFile}]";
+                object value = x.value;            
+
+                object replace = Word.WdReplace.wdReplaceAll;
+
+                object wrap = 1;
+
+                var valor = word.Selection.Find.Execute(ref key, ref OnMissing,
+                                                ref OnMissing, ref OnMissing, ref OnMissing,
+                                                ref OnMissing, ref OnMissing,
+                                                ref wrap, ref OnMissing, ref value,
+                                                ref replace, ref OnMissing,
+                                                ref OnMissing, ref OnMissing,
+                                                ref OnMissing);
+                
+            }
+            #endregion
+            object saveAs = directoryDocx;
+            doc.SaveAs2(ref saveAs, ref OnMissing, ref OnMissing, ref OnMissing,
+                                                ref OnMissing, ref OnMissing, ref OnMissing,
+                                                ref OnMissing, ref OnMissing, ref OnMissing, ref OnMissing, ref OnMissing, ref OnMissing,
+                                                ref OnMissing, ref OnMissing, ref OnMissing);
+
+            doc.Close();
+            word.Quit();
+        }
+        #endregion
     }
 }

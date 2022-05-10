@@ -24,7 +24,7 @@ namespace DocGenerator.Shared
                                      autoDelete: false,
                                      arguments: null);
 
-                var body = Encoding.UTF8.GetBytes(JsonSerializer.Serialize(obj));
+               var body = Encoding.UTF8.GetBytes(JsonSerializer.Serialize(obj)) ;
 
                 channel.BasicPublish(exchange: "",
                                      routingKey: "pdfGenerato",
