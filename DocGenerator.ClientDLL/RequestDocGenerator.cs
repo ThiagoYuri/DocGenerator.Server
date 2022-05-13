@@ -11,13 +11,9 @@ namespace DocGenerator.ClientDLL
 {
     public class RequestDocGenerator
     {
-        private string urlDefault = "http://localhost:5000";
-        private string controller = "DocumentWord";
+        private const string urlDefault = "http://localhost:5000";
+        private const string controller = "DocumentWord";
 
-        public void createRequestHeader()
-        {
-            throw new NotImplementedException();
-        }
 
         public string? postDocument()
         {
@@ -29,7 +25,6 @@ namespace DocGenerator.ClientDLL
         {
             Request request = new Request(urlDefault, controller, $"GetFile?id={guidDocument}");
             Task<HttpResponseMessage> task = request.get();
-            //string teste = task.Result.StatusCode.ToString();
             return task.Result;
         }
     }

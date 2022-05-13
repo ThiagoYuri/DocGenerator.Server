@@ -59,17 +59,16 @@ namespace DocGenerator.Producer.Controllers
             try
             {
                 var stream = new FileStream($"{Shared.Utils.GeneratorPDF.pathDefaultPdf}/{id}.pdf", FileMode.Open);
-                return new FileStreamResult(stream, "application/pdf");
+                return Ok(new FileStreamResult(stream, "application/pdf"));
             }
-            catch(FileNotFoundException)
+            catch(FileNotFoundException e)
             {
                 return NotFound("Erro: file not exist");
             }
-            catch (Exception e )
+            catch (Exception e)
             {
-                return BadRequest(e.Message);
+                return StatusCode(500,$"Internal Server Erro: {e.Message}");
             }
-
         }
 
     }

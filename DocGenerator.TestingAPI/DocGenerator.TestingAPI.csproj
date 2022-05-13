@@ -21,7 +21,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\DocGenerator.ClientDLL\DocGenerator.ClientDLL.csproj" />
-    <ProjectReference Include="..\DocGenerator.Shared\DocGenerator.Shared.csproj" />
+    <ProjectReference Include="..\DocGenerator.Producer\DocGenerator.Producer.csproj" />
   </ItemGroup>
 
 </Project>
