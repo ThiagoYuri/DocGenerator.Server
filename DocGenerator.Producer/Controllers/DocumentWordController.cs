@@ -63,7 +63,7 @@ namespace DocGenerator.Producer.Controllers
             }
             catch(FileNotFoundException)
             {
-                return BadRequest("Erro: file not exist");
+                return NotFound("Erro: file not exist");
             }
             catch (Exception e )
             {
