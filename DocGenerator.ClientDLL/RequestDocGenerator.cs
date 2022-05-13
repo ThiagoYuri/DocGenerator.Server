@@ -1,4 +1,4 @@
-﻿using DocGenerator.ClientDLL.Interfaces;
+﻿using DocGenerator.Shared.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,37 +9,28 @@ using System.Threading.Tasks;
 
 namespace DocGenerator.ClientDLL
 {
-    public class RequestDocGenerator<T> 
+    public class RequestDocGenerator
     {
-        private static readonly HttpClient client = new HttpClient();
-
-        const string connectionBase = "/";
-
-        private string controller = "";
-
-        private string endPoint { get; set; }
-
-
-        public RequestDocGenerator(string controller)
-        {
-            this.controller = controller;
-            client.DefaultRequestHeaders.Accept.Clear();
-            client.DefaultRequestHeaders.Accept.Add(
-                new MediaTypeWithQualityHeaderValue("application/vnd.github.v3+json"));
-            client.DefaultRequestHeaders.Add("User-Agent", ".NET Foundation Repository Reporter");
-        }
-
-        private static async Task ProcessRepositories()
-        {
-            var stringTask = client.GetStringAsync("https://api.github.com/orgs/dotnet/repos");
-
-            var msg = await stringTask;
-            Console.Write(msg);
-        }
+        private string urlDefault = "http://localhost:5000";
+        private string controller = "DocumentWord";
 
         public void createRequestHeader()
         {
             throw new NotImplementedException();
+        }
+
+        public string? postDocument()
+        {
+
+            return null;
+        }
+
+        public HttpResponseMessage getDocument(string guidDocument)
+        {
+            Request request = new Request(urlDefault, controller, $"GetFile?id={guidDocument}");
+            Task<HttpResponseMessage> task = request.get();
+            //string teste = task.Result.StatusCode.ToString();
+            return task.Result;
         }
     }
 }
