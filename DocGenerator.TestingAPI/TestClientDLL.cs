@@ -32,7 +32,7 @@ namespace DocGenerator.TestingAPI
         public void TestMethodGetOk()
         {
             RequestDocGenerator requestDocGenerator = new RequestDocGenerator();
-            HttpResponseMessage responseMessage = requestDocGenerator.getDocument("75d05ba4-159e-4d96-a02f-70aba35fda58");
+            HttpResponseMessage responseMessage = requestDocGenerator.getDocument(Resource1.nameFileTesting);
             Assert.Equal<int>(200, (int)responseMessage.StatusCode);
         }
 

@@ -1,5 +1,6 @@
 ﻿using DocGenerator.ClientDLL;
 using DocGenerator.Producer.Controllers;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
@@ -19,15 +20,34 @@ namespace DocGenerator.TestingAPI
         [Fact]
         public void TestMethodPostOK()
         {
-
+          
         }
-
 
         [Fact]
-        public void TestMethodPost()
+        public void TestMethodPostErroFileEmpty()
         {
-
+            DocumentWordController documentWordController = new DocumentWordController();
+            Stream s = new MemoryStream(Resource1.Empty);
+            Task<JsonResult> task = documentWordController.PostWordtoConvertPDF("", new FormFile(s,0,s.Length, "teste", "teste.docx"));
+            Assert.Equal(500, task.Result.StatusCode);
         }
+
+        [Fact]
+        public void TestMethodPostErroFileNull()
+        {
+            DocumentWordController documentWordController = new DocumentWordController();
+            Task<JsonResult> task = documentWordController.PostWordtoConvertPDF("", default(IFormFile));
+            Assert.Equal(500, task.Result.StatusCode);
+        }
+        [Fact]
+        public void TestMethodPostErroSupportExtensionDocx()
+        {
+            DocumentWordController documentWordController = new DocumentWordController();
+            Stream s = new MemoryStream(Resource1.filePdf);
+            Task<JsonResult> task = documentWordController.PostWordtoConvertPDF("", new FormFile(s, 0, s.Length, "teste", "teste.pdf"));
+            Assert.Equal(500, task.Result.StatusCode);
+        }
+
         #endregion
 
         #region GET Testing
@@ -35,7 +55,8 @@ namespace DocGenerator.TestingAPI
         public void TestMethodGetOk()
         {
             DocumentWordController ctl = new DocumentWordController();
-            Task<IActionResult> task = ctl.GetPdfFile("75d05ba4-159e-4d96-a02f-70aba35fda58");
+            
+            Task<IActionResult> task = ctl.GetPdfFile(Resource1.nameFileTesting);
             Assert.Equal<int>(200, ReturnStatusCode(task));
         }
 
