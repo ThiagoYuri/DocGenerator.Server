@@ -1,5 +1,5 @@
 # API for document generation
-##### *Context: DocumentGenerator is a Services API, It main working is creating and organizing of document the consumer.*
+##### *Context: DocumentGenerator is a API Services, It main working is creating and organizing of document the consumer.*
 
 ## List Projects
  + Web API 
