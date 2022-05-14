@@ -12,7 +12,9 @@ export class PopupForms extends Component {
         super(props);
     }
 
-
+    createCertificate () {
+        
+    }
 
     render() {
         return (

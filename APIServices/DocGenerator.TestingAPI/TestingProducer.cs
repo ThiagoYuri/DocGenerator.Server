@@ -1,5 +1,4 @@
-﻿using DocGenerator.ClientDLL;
-using DocGenerator.Producer.Controllers;
+﻿using DocGenerator.Producer.Controllers;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System;
@@ -20,7 +19,21 @@ namespace DocGenerator.TestingAPI
         [Fact]
         public void TestMethodPostOK()
         {
-          
+            DocumentWordController documentWordController = new DocumentWordController();
+            Stream s = new MemoryStream(Resource1.Certificate);
+            FormFile f = new FormFile(s, 0, s.Length, "teste", "teste.docx");
+            Task<JsonResult> task = documentWordController.PostWordtoConvertPDF(Resource1.jsonDefault, f );
+            Assert.Equal(200, task.Result.StatusCode);
+        }
+
+        [Fact]
+        public void TestMethodPostErroJson()
+        {
+            DocumentWordController documentWordController = new DocumentWordController();
+            Stream s = new MemoryStream(Resource1.Certificate);
+            FormFile f = new FormFile(s, 0, s.Length, "teste", "teste.docx");
+            Task<JsonResult> task = documentWordController.PostWordtoConvertPDF("", f);
+            Assert.Equal(500, task.Result.StatusCode);
         }
 
         [Fact]
@@ -28,7 +41,7 @@ namespace DocGenerator.TestingAPI
         {
             DocumentWordController documentWordController = new DocumentWordController();
             Stream s = new MemoryStream(Resource1.Empty);
-            Task<JsonResult> task = documentWordController.PostWordtoConvertPDF("", new FormFile(s,0,s.Length, "teste", "teste.docx"));
+            Task<JsonResult> task = documentWordController.PostWordtoConvertPDF(Resource1.jsonDefault, new FormFile(s,0,s.Length, "teste", "teste.docx"));
             Assert.Equal(500, task.Result.StatusCode);
         }
 
@@ -36,7 +49,7 @@ namespace DocGenerator.TestingAPI
         public void TestMethodPostErroFileNull()
         {
             DocumentWordController documentWordController = new DocumentWordController();
-            Task<JsonResult> task = documentWordController.PostWordtoConvertPDF("", default(IFormFile));
+            Task<JsonResult> task = documentWordController.PostWordtoConvertPDF(Resource1.jsonDefault, default(IFormFile));
             Assert.Equal(500, task.Result.StatusCode);
         }
         [Fact]
@@ -44,7 +57,7 @@ namespace DocGenerator.TestingAPI
         {
             DocumentWordController documentWordController = new DocumentWordController();
             Stream s = new MemoryStream(Resource1.filePdf);
-            Task<JsonResult> task = documentWordController.PostWordtoConvertPDF("", new FormFile(s, 0, s.Length, "teste", "teste.pdf"));
+            Task<JsonResult> task = documentWordController.PostWordtoConvertPDF(Resource1.jsonDefault, new FormFile(s, 0, s.Length, "teste", "teste.pdf"));
             Assert.Equal(500, task.Result.StatusCode);
         }
 

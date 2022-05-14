@@ -27,9 +27,8 @@ namespace DocGenerator.Shared.Models
         /// <summary>
         /// 
         /// </summary>
-        /// <param name="useAgent"></param>
         /// <param name="streamFile">File in .docx to template</param>
-        public DocumentWord(string useAgent, MemoryStream streamFile)
+        public DocumentWord(MemoryStream streamFile)
         {
            // this.dicChangedTextFile = dicChangedTextFile;
             this.File = streamFile.ToArray();

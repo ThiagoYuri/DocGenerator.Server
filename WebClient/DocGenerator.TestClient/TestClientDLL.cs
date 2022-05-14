@@ -1,9 +1,12 @@
 ﻿using DocGenerator.ClientDLL;
+using DocGenerator.TestClient;
+using DocGenerator.TestClient.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net.Http;
 using System.Text;
+using System.Text.Json;
 using System.Threading.Tasks;
 using Xunit;
 
@@ -11,6 +14,8 @@ namespace DocGenerator.TestingAPI
 {
     public class TestClientDLL
     {
+
+       // private const string jsonDefault = JsonSerializer.Deserialize<List<DocumentInfo>>();
 
         #region Post Testing
         [Fact]

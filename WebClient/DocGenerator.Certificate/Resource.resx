@@ -121,13 +121,4 @@
   <data name="Certificate" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>Resources\Certificate.docx;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
-  <data name="Empty" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>Resources\Empty.docx;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="filePdf" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>Resources\filePdf.pdf;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="nameFileTesting" xml:space="preserve">
-    <value>pdfTesting</value>
-  </data>
 </root>

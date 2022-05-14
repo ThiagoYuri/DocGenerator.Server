@@ -20,7 +20,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\DocGenerator.ClientDLL\DocGenerator.ClientDLL.csproj" />
+    <ProjectReference Include="..\DocGenerator.ConsumerGeneratorPDF\DocGenerator.ConsumerGeneratorPDF.csproj" />
     <ProjectReference Include="..\DocGenerator.Producer\DocGenerator.Producer.csproj" />
   </ItemGroup>
 

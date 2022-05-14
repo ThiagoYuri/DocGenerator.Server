@@ -34,8 +34,10 @@ namespace DocGenerator.Producer.Controllers
 
                 MemoryStream ms = new MemoryStream();
                 file.CopyTo(ms);
-                DocumentWord docWord = new DocumentWord(Request.Headers["User-Agent"],ms);
+                DocumentWord docWord = new DocumentWord(ms); 
+               
                 docWord.ListNewInfoFile = JsonSerializer.Deserialize<List<DocumentInfo>>(info);
+               
                 new Publishe<DocumentWord>(docWord);
                 return new JsonResult(docWord) { StatusCode = 200};
             }

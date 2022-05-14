@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace DocGenerator.TestingAPI {
+namespace DocGenerator.TestClient {
     using System;
     
     
@@ -39,7 +39,7 @@ namespace DocGenerator.TestingAPI {
         internal static global::System.Resources.ResourceManager ResourceManager {
             get {
                 if (object.ReferenceEquals(resourceMan, null)) {
-                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("DocGenerator.TestingAPI.Resource1", typeof(Resource1).Assembly);
+                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("DocGenerator.TestClient.Resource1", typeof(Resource1).Assembly);
                     resourceMan = temp;
                 }
                 return resourceMan;
@@ -87,6 +87,15 @@ namespace DocGenerator.TestingAPI {
             get {
                 object obj = ResourceManager.GetObject("filePdf", resourceCulture);
                 return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to [{&quot;keyInFile&quot;:&quot;COURSENAME&quot;,&quot;value&quot;:&quot;Java Script&quot;},{&quot;keyInFile&quot;:&quot;NAMEFULL&quot;,&quot;value&quot;:&quot;Thiago Yuri Oliveira Monteiro&quot;},{&quot;keyInFile&quot;:&quot;DATEEMISS&quot;,&quot;value&quot;:&quot;09/05/2022&quot;}].
+        /// </summary>
+        internal static string jsonDefault {
+            get {
+                return ResourceManager.GetString("jsonDefault", resourceCulture);
             }
         }
         
