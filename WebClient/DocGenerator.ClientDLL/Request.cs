@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Net.Http;
 using System.Net.Http.Headers;
@@ -13,6 +14,8 @@ namespace DocGenerator.ClientDLL
         private static readonly HttpClient client = new HttpClient();
 
         private string urlFull;
+
+        MultipartFormDataContent formDataContent = new MultipartFormDataContent();
 
         /// <summary>
         /// Contructor Request
@@ -41,21 +44,26 @@ namespace DocGenerator.ClientDLL
 
 
   
-        /*/
-        public static async Task<HttpContent> post()
+        
+        public async Task<HttpResponseMessage> post()
         {
-            var stringTask = client.GetStringAsync("");
-
-            var msg = await stringTask;
-            Console.Write(msg);
+            return await client.PostAsync(urlFull, formDataContent);
         }
-        /*/
+       
 
-        /*/
-        public void CreateRequestBody()
+       
+        public void CreateRequestBody(string filePath)
         {
+            // Get The ByteArrayContent,Reading Bytes From The Give File Path.
+            // Adding It To The MultipartFormDataContent Once File Is Read.
+            ByteArrayContent fileContent = new ByteArrayContent(System.IO.File.ReadAllBytes(filePath));
 
+            // Add Content Type For MediaTypeHeaderValue.
+            fileContent.Headers.ContentType = new MediaTypeHeaderValue("application/octet-stream");
+
+            // Add The File Under ''input'
+            formDataContent.Add(fileContent, "file", System.IO.Path.GetFileName(filePath));
         }
-        /*/
+
     }
 }

@@ -39,7 +39,7 @@ namespace DocGenerator.Producer.Controllers
                 docWord.ListNewInfoFile = JsonSerializer.Deserialize<List<DocumentInfo>>(info);
                
                 new Publishe<DocumentWord>(docWord);
-                return new JsonResult(docWord) { StatusCode = 200};
+                return new JsonResult(docWord.Id) { StatusCode = 200};
             }
             catch (Exception e)
             {
@@ -59,8 +59,8 @@ namespace DocGenerator.Producer.Controllers
         {
             try
             {
-                var stream = new FileStream($"{Shared.Utils.GeneratorPDF.pathDefaultPdf}/{id}.pdf", FileMode.Open);
-                return Ok(new FileStreamResult(stream, "application/pdf"));
+                var stream = new FileStream($"{Shared.Utils.GeneratorPDF.pathDefaultPdf}/{id}.pdf", FileMode.Open);                
+                return new FileStreamResult(stream, "application/pdf");
             }
             catch(FileNotFoundException e)
             {
@@ -71,6 +71,7 @@ namespace DocGenerator.Producer.Controllers
                 return StatusCode(500,$"Internal Server Erro: {e.Message}");
             }
         }
+
 
     }
 }

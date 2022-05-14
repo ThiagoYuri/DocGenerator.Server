@@ -1,23 +1,30 @@
-﻿using System;
+﻿using DocGenerator.TestClient.Models;
+using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Text;
+using System.Text.Json;
 using System.Threading.Tasks;
 
 namespace DocGenerator.ClientDLL
 {
     public class RequestDocGenerator
     {
-        private const string urlDefault = "http://localhost:5000";
+        private const string urlDefault = "https://localhost:5001"; 
         private const string controller = "DocumentWord";
 
 
-        public string? postDocument()
+        public HttpResponseMessage postDocument(List<DocumentInfo> listInfo, string directoryFile)
         {
+            string json = JsonSerializer.Serialize<List<DocumentInfo>>(listInfo);
 
-            return null;
+            Request request = new Request(urlDefault, controller, $"PostFile?info={json}");
+            request.CreateRequestBody(directoryFile);
+            Task<HttpResponseMessage> task = request.post();
+            return task.Result;
         }
 
         public HttpResponseMessage getDocument(string guidDocument)

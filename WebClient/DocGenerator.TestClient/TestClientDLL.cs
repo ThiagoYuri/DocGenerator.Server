@@ -1,6 +1,7 @@
 ﻿using DocGenerator.ClientDLL;
 using DocGenerator.TestClient;
 using DocGenerator.TestClient.Models;
+using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -21,15 +22,12 @@ namespace DocGenerator.TestingAPI
         [Fact]
         public void TestMethodPostOK()
         {
-
+            RequestDocGenerator requestDocGenerator = new RequestDocGenerator();
+            HttpResponseMessage responseMessage = requestDocGenerator.postDocument(new List<DocumentInfo>() { }, Environment.GetFolderPath(Environment.SpecialFolder.Desktop)+@"\\Certificate.docx");
+            string json =  responseMessage.Content.ReadAsStringAsync().Result;
+            Assert.Equal<int>(200, (int)responseMessage.StatusCode);
         }
 
-
-        [Fact]
-        public void TestMethodPost()
-        {
-
-        }
         #endregion
 
         #region GET Testing

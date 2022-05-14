@@ -67,16 +67,14 @@ namespace DocGenerator.TestingAPI
         [Fact]
         public void TestMethodGetOk()
         {
-            DocumentWordController ctl = new DocumentWordController();
-            
+            DocumentWordController ctl = new DocumentWordController();            
             Task<IActionResult> task = ctl.GetPdfFile(Resource1.nameFileTesting);
-            Assert.Equal<int>(200, ReturnStatusCode(task));
+            Assert.IsType(typeof(FileStreamResult), (FileStreamResult)task.Result);
         }
 
         [Fact]
         public void TestMethodGetNotFound()
-        {
-
+        {            
             DocumentWordController ctl = new DocumentWordController();
             Task<IActionResult> task = ctl.GetPdfFile("EmptyURL");
             Assert.Equal<int>(404, ReturnStatusCode(task));
