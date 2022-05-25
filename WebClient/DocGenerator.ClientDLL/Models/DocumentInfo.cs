@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace  DocGenerator.TestClient.Models
+namespace  DocGenerator.ClientDLL.Models
 {
     public class DocumentInfo
     {

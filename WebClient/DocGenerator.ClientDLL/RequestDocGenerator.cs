@@ -1,4 +1,4 @@
-﻿using DocGenerator.TestClient.Models;
+﻿using DocGenerator.ClientDLL.Models;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -17,12 +17,12 @@ namespace DocGenerator.ClientDLL
         private const string controller = "DocumentWord";
 
 
-        public HttpResponseMessage postDocument(List<DocumentInfo> listInfo, string directoryFile)
+        public HttpResponseMessage postDocument(List<DocumentInfo> listInfo, byte[] file)
         {
             string json = JsonSerializer.Serialize<List<DocumentInfo>>(listInfo);
 
             Request request = new Request(urlDefault, controller, $"PostFile?info={json}");
-            request.CreateRequestBody(directoryFile);
+            request.CreateRequestBody(file);
             Task<HttpResponseMessage> task = request.post();
             return task.Result;
         }

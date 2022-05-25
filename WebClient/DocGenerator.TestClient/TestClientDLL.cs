@@ -1,14 +1,9 @@
 ﻿using DocGenerator.ClientDLL;
+using DocGenerator.ClientDLL.Models;
 using DocGenerator.TestClient;
-using DocGenerator.TestClient.Models;
-using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Net.Http;
-using System.Text;
-using System.Text.Json;
-using System.Threading.Tasks;
 using Xunit;
 
 namespace DocGenerator.TestingAPI
@@ -23,7 +18,7 @@ namespace DocGenerator.TestingAPI
         public void TestMethodPostOK()
         {
             RequestDocGenerator requestDocGenerator = new RequestDocGenerator();
-            HttpResponseMessage responseMessage = requestDocGenerator.postDocument(new List<DocumentInfo>() { }, Environment.GetFolderPath(Environment.SpecialFolder.Desktop)+@"\\Certificate.docx");
+            HttpResponseMessage responseMessage = requestDocGenerator.postDocument(new List<DocumentInfo>() { }, System.IO.File.ReadAllBytes(Environment.GetFolderPath(Environment.SpecialFolder.Desktop)+@"\\Certificate.docx"));
             string json =  responseMessage.Content.ReadAsStringAsync().Result;
             Assert.Equal<int>(200, (int)responseMessage.StatusCode);
         }

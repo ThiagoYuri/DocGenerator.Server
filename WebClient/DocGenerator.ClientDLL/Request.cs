@@ -52,17 +52,17 @@ namespace DocGenerator.ClientDLL
        
 
        
-        public void CreateRequestBody(string filePath)
+        public void CreateRequestBody(byte[] file)
         {
             // Get The ByteArrayContent,Reading Bytes From The Give File Path.
             // Adding It To The MultipartFormDataContent Once File Is Read.
-            ByteArrayContent fileContent = new ByteArrayContent(System.IO.File.ReadAllBytes(filePath));
+            ByteArrayContent fileContent = new ByteArrayContent(file);
 
             // Add Content Type For MediaTypeHeaderValue.
             fileContent.Headers.ContentType = new MediaTypeHeaderValue("application/octet-stream");
 
             // Add The File Under ''input'
-            formDataContent.Add(fileContent, "file", System.IO.Path.GetFileName(filePath));
+            formDataContent.Add(fileContent, "file", "file.docx");
         }
 
     }
