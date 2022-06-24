@@ -14,11 +14,11 @@ namespace DocGenerator.Shared
         /// </summary>
         public Publishe(T obj)
         {
-            var factory = new ConnectionFactory() { HostName = "localhost" };
+            var factory = new ConnectionFactory() { Endpoint = new AmqpTcpEndpoint("http://localhost:15672"), HostName = "localhost" };
             using (var connection = factory.CreateConnection())
             using (var channel = connection.CreateModel())
             {
-                channel.QueueDeclare(queue: "pdfGenerato",
+                channel.QueueDeclare(queue: "pdfGenerator",
                                      durable: false,
                                      exclusive: false,
                                      autoDelete: false,
@@ -27,7 +27,7 @@ namespace DocGenerator.Shared
                var body = Encoding.UTF8.GetBytes(JsonSerializer.Serialize(obj)) ;
 
                 channel.BasicPublish(exchange: "",
-                                     routingKey: "pdfGenerato",
+                                     routingKey: "pdfGenerator",
                                      basicProperties: null,
                                      body: body);
             }

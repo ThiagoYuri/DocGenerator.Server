@@ -18,12 +18,12 @@ namespace DocGenerator.ConsumerGeneratorPDF
 
         static void Main(string[] args)
         {
-                var factory = new ConnectionFactory() { HostName = "localhost" };
+                var factory = new ConnectionFactory() { Endpoint= new AmqpTcpEndpoint("http://localhost:15672"), HostName = "localhost" };
                 using (var connection = factory.CreateConnection())
                 using (var channel = connection.CreateModel())
                 {
                     Console.WriteLine("Aguardando Mesagems");
-                    channel.QueueDeclare(queue: "pdfGenerato",
+                    channel.QueueDeclare(queue: "pdfGenerator",
                                          durable: false,
                                          exclusive: false,
                                          autoDelete: false,
@@ -50,7 +50,7 @@ namespace DocGenerator.ConsumerGeneratorPDF
                         }
                        
                     };
-                    channel.BasicConsume(queue: "pdfGenerato",
+                    channel.BasicConsume(queue: "pdfGenerator",
                                          autoAck: true,
                                          consumer: consumer);
 

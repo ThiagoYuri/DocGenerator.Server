@@ -1,0 +1,10 @@
+{
+  "profiles": {
+    "DocGenerator.ConsumerGeneratorPDF": {
+      "commandName": "Project"
+    },
+    "Docker": {
+      "commandName": "Docker"
+    }
+  }
+}
