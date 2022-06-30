@@ -21,20 +21,14 @@ namespace DocGenerator.Producer.Controllers
         /// <returns>ID pdf</returns>
         [HttpPost]
         [Route("PostFile")]
-        public async Task<JsonResult> PostWordtoConvertPDF(string info, IFormFile file)
+        public async Task<JsonResult> PostWordtoConvertPDF(string info)
         {
             try
             {
-                if(file == default(IFormFile))
-                    throw new Exception("File is null");
-                if (file.Length <= 0) 
-                    throw new Exception("Empty file");
-                if (!file.FileName.Contains(".docx"))
-                    throw new Exception("support extension .docx");
-
                 MemoryStream ms = new MemoryStream();
-                file.CopyTo(ms);
-                DocumentWord docWord = new DocumentWord(ms); 
+               
+                await Request.Body.CopyToAsync(ms);
+                DocumentWord docWord = new DocumentWord(ms);                               
                
                 docWord.ListNewInfoFile = JsonSerializer.Deserialize<List<DocumentInfo>>(info);
                
