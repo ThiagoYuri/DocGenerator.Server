@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Text.Json;
 using System.Threading.Tasks;
 
@@ -68,6 +69,27 @@ namespace DocGenerator.Producer.Controllers
             }
         }
 
+
+        [HttpGet]
+        [Route("GetListFiles")]
+        public async Task<JsonResult> GetListFile()
+        {
+            try
+            {
+                DirectoryInfo di = new DirectoryInfo($"{Shared.Utils.GeneratorPDF.pathDefaultPdf}/");                
+                List<FileInfo> files = di.GetFiles("*.pdf").ToList();
+                List<string> ListDocument = files.Select(x=> x.Name.Remove(x.Name.Length-4)).ToList();
+                return new JsonResult(ListDocument);
+            }
+            catch (FileNotFoundException e)
+            {
+                return new JsonResult(e) { StatusCode = 400 };
+            }
+            catch (Exception e)
+            {
+                return new JsonResult(e) { StatusCode = 500 };
+            }
+        }
 
     }
 }
